@@ -8,18 +8,19 @@ import java.util.Random;
  * Created by michaelhilton on 1/4/17.
  */
 public class BattleshipModel {
+    public Player compPlayer;
 
-    private Mil_Ship aircraftCarrier = new Mil_Ship("AircraftCarrier",5, 5, new Coordinate(0,0),new Coordinate(0,0));
-    private Mil_Ship battleship = new Mil_Ship("Battleship",4, 4, new Coordinate(0,0),new Coordinate(0,0));
-    private Mil_Ship cruiser = new Mil_Ship("Cruiser",3, 3, new Coordinate(0,0),new Coordinate(0,0));
-    private Civ_Ship clipper = new Civ_Ship("Clipper",3, 1, new Coordinate(0,0),new Coordinate(0,0));
-    private Civ_Ship dinghy = new Civ_Ship("dinghy",1, 1, new Coordinate(0,0),new Coordinate(0,0));
+    private Mil_Ship aircraftCarrier;
+    private Mil_Ship battleship;
+    private Mil_Ship cruiser;
+    private Civ_Ship clipper;
+    private Civ_Ship dinghy;
 
-    private Mil_Ship computer_aircraftCarrier = new Mil_Ship("Computer_AircraftCarrier",5, 5, new Coordinate(2,2),new Coordinate(2,6));
-    private Mil_Ship computer_battleship = new Mil_Ship("Computer_Battleship",4, 4, new Coordinate(2,8),new Coordinate(5,8));
-    private Mil_Ship computer_cruiser = new Mil_Ship("Computer_Cruiser",3, 3, new Coordinate(4,1),new Coordinate(4,3));
-    private Civ_Ship computer_clipper = new Civ_Ship("Computer_Clipper",3, 1, new Coordinate(7,3),new Coordinate(7,5));
-    private Civ_Ship computer_dinghy = new Civ_Ship("Computer_dinghy",1, 1, new Coordinate(9,6),new Coordinate(9,6));
+    private Mil_Ship computer_aircraftCarrier;
+    private Mil_Ship computer_battleship;
+    private Mil_Ship computer_cruiser;
+    private Civ_Ship computer_clipper;
+    private Civ_Ship computer_dinghy;
 
     ArrayList<Coordinate> playerHits;
     private ArrayList<Coordinate> playerMisses;
@@ -42,6 +43,18 @@ public class BattleshipModel {
         computerMisses= new ArrayList<>();
         playerPlaces= new ArrayList<>();
         computerPlaces= new ArrayList<>();
+
+        aircraftCarrier = new Mil_Ship("AircraftCarrier",5, 5, new Coordinate(0,0),new Coordinate(0,0));
+        battleship = new Mil_Ship("Battleship",4, 4, new Coordinate(0,0),new Coordinate(0,0));
+        cruiser = new Mil_Ship("Cruiser",3, 3, new Coordinate(0,0),new Coordinate(0,0));
+        clipper = new Civ_Ship("Clipper",3, 1, new Coordinate(0,0),new Coordinate(0,0));
+        dinghy = new Civ_Ship("dinghy",1, 1, new Coordinate(0,0),new Coordinate(0,0));
+
+        computer_aircraftCarrier = new Mil_Ship("Computer_AircraftCarrier",5, 5, new Coordinate(2,2),new Coordinate(2,6));
+        computer_battleship = new Mil_Ship("Computer_Battleship",4, 4, new Coordinate(2,8),new Coordinate(5,8));
+        computer_cruiser = new Mil_Ship("Computer_Cruiser",3, 3, new Coordinate(4,1),new Coordinate(4,3));
+        computer_clipper = new Civ_Ship("Computer_Clipper",3, 1, new Coordinate(7,3),new Coordinate(7,5));
+        computer_dinghy = new Civ_Ship("Computer_dinghy",1, 1, new Coordinate(9,6),new Coordinate(9,6));
     }
 
     public void lifeCheck(Ship in){
@@ -69,8 +82,19 @@ public class BattleshipModel {
         } if(shipName.equalsIgnoreCase("clipper")) {
             return clipper;
         }if(shipName.equalsIgnoreCase("dinghy")) {
-            return dinghy;
-        } else {
+            return dinghy;}
+            if (shipName.equalsIgnoreCase("computer_aircraftcarrier")) {
+                return computer_aircraftCarrier;
+            } if(shipName.equalsIgnoreCase("computer_battleship")) {
+                return computer_battleship;
+            } if(shipName.equalsIgnoreCase("computer_Cruiser")) {
+                return computer_cruiser;
+            } if(shipName.equalsIgnoreCase("computer_clipper")) {
+                return computer_clipper;
+            }if(shipName.equalsIgnoreCase("computer_dinghy")) {
+            return computer_dinghy;
+        }
+         else {
             return null;
         }
     }
@@ -269,6 +293,9 @@ public class BattleshipModel {
 
         if(aircraftCarrier.covers(coor)){
             playerHits.add(coor);
+            if (compPlayer.shootstate == 0){
+                compPlayer.Firsthit = coor;
+            }
             aircraftCarrier.decHealth();
             lifeCheck(aircraftCarrier);
             System.out.println("Aircraft Carrier Hit! Health: "+aircraftCarrier.getHealth());

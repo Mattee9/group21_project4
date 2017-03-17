@@ -5,13 +5,21 @@ package edu.oregonstate.cs361.battleship;
  */
 
 public class Player {
+  
+    public Player(){
+        Firsthit = new Coordinate(11,11);
+        Lasthit = new Coordinate(11,11);
+        ShipCount = 0;
+        shootstate = 0;
+    }
 
+    public Coordinate Firsthit;
 
-    public coord Firsthit;
-
-    public coord Lasthit;
+    public Coordinate Lasthit;
 
     public int ShipCount;
+
+    public int shootstate;
 
 
 
